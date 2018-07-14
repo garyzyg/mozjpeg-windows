@@ -1,0 +1,33 @@
+version: '{branch}-{build}'
+skip_non_tags: false
+platform:
+- x86
+- x64
+init:
+- cmd: IF %APPVEYOR_REPO_TAG%==true appveyor UpdateBuild -Version %APPVEYOR_REPO_TAG_NAME%-%APPVEYOR_BUILD_NUMBER%
+before_build:
+- cmd: >-
+    git clone https://github.com/mozilla/mozjpeg.git
+
+    CD mozjpeg
+
+    appveyor DownloadFile https://www.nasm.us/pub/nasm/releasebuilds/2.13.03/win32/nasm-2.13.03-win32.zip
+
+    7z e *.zip */nasm.exe
+
+    IF %APPVEYOR_REPO_TAG%==true git checkout v%APPVEYOR_REPO_TAG_NAME%
+build_script:
+- cmd: ..\build.bat
+after_build:
+- cmd: 7z a ..\mozjpeg-%Platform%.zip *.exe -x!nasm.exe
+artifacts:
+- path: '*.zip'
+  name: mozjpeg
+deploy:
+- provider: GitHub
+  tag: $(APPVEYOR_REPO_TAG_NAME)
+  auth_token:
+    secure: cTCb8vP5nxjHjWGsaa4ynx5hb22vEZ65rsE6f/RRatj93TvHbjT1H2Tk8q4kRjLO
+  artifact: /.*\.zip/
+  on:
+    APPVEYOR_REPO_TAG: true
