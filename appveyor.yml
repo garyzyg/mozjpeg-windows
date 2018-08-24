@@ -11,9 +11,15 @@ before_build:
 
     CD mozjpeg
 
+    appveyor DownloadFile https://nchc.dl.sourceforge.net/project/libpng/zlib/1.2.11/zlib1211.zip
+
+    appveyor DownloadFile https://nchc.dl.sourceforge.net/project/libpng/libpng16/1.6.35/lpng1635.zip
+
     appveyor DownloadFile https://www.nasm.us/pub/nasm/releasebuilds/2.13.03/win32/nasm-2.13.03-win32.zip
 
     7z e *.zip */nasm.exe
+
+    FOR %%I IN (*.zip) DO FOR /F %%J IN ('ECHO %%I ^| FIND /I /V "nasm"') DO 7z x %%J
 
     IF %APPVEYOR_REPO_TAG%==true git checkout v%APPVEYOR_REPO_TAG_NAME%
 build_script:
