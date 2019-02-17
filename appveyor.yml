@@ -1,4 +1,5 @@
 version: '{branch}-{build}'
+image: Visual Studio 2013
 skip_non_tags: false
 platform:
 - x86
