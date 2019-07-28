@@ -34,7 +34,7 @@ deploy:
 - provider: GitHub
   tag: $(APPVEYOR_REPO_TAG_NAME)
   auth_token:
-    secure: cTCb8vP5nxjHjWGsaa4ynx5hb22vEZ65rsE6f/RRatj93TvHbjT1H2Tk8q4kRjLO
+    secure: FVK6Akw5LzrVylAAzDcQ5cSWP3owEUdtcosox2/X/F0nxEFaWaErAu2w6MTPGVUS
   artifact: /.*\.zip/
   on:
     APPVEYOR_REPO_TAG: true
