@@ -1,5 +1,5 @@
 version: '{branch}-{build}'
-image: Visual Studio 2013
+image: Visual Studio 2015
 skip_non_tags: false
 platform:
 - x86
@@ -34,7 +34,7 @@ deploy:
 - provider: GitHub
   tag: $(APPVEYOR_REPO_TAG_NAME)
   auth_token:
-    secure: FVK6Akw5LzrVylAAzDcQ5cSWP3owEUdtcosox2/X/F0nxEFaWaErAu2w6MTPGVUS
+    secure: eWqhjZbJC8rmSjO4P7VqWVq6aZSDc3KxEvzlk/lQFKH++wfC+Tu9s/PO1Btsh9KP
   artifact: /.*\.zip/
   on:
     APPVEYOR_REPO_TAG: true

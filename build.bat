@@ -25,7 +25,7 @@ SET Path=%%~dpK;%Path%& MKLINK /H "%%~dpK%%J" "%%K"
 IF %Platform%==x64 (SET M64=-m64) ELSE SET M64=-m32
 
 FOR /F "DELIMS=" %%I IN ('WHERE cmake.exe') DO FOR /F "DELIMS=" %%J IN ('DIR /B /S "%%~dpI..\Windows-MSVC.cmake"') DO FOR %%K IN (
-"/O2 /Ob2		/O1 -flto /GS- /DPNG_SUPPORTED %M64%"
+"/O2 /Ob2		/O1 -flto /GS- %M64%"
 "\${_RTC1}		%M64%"
 ) DO FOR /F "TOKENS=1,* DELIMS=	" %%L IN (%%K) DO %SED% "s@%%L@%%M@" -i "%%J"
 
@@ -52,5 +52,6 @@ FOR /F %%J IN ('ECHO %%I ^| FIND /I "lpng"') DO (
 
 )
 
-%SED% "s@\${CJPEG_BMP_SOURCES}@& rdpng.c@" -i CMakeLists.txt
+%SED% "/find_package(\(ZLIB\|PNG\)/d" -i CMakeLists.txt sharedlib\CMakeLists.txt
+
 cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="%M64% -fno-builtin-pow" -DZLIB_LIBRARY=%ZLIB_LIBRARY% -DPNG_LIBRARY=%PNG_LIBRARY% -DPNG_PNG_INCLUDE_DIR=%PNG_PNG_INCLUDE_DIR% -DWITH_CRT_DLL=1 -DCMAKE_EXE_LINKER_FLAGS="/MANIFEST:NO libpng16_static.lib zlibstatic.lib"& FOR %%I IN (*.1) DO FOR /F "TOKENS=2 DELIMS=( " %%J IN ('FIND "add_executable" CMakeLists.txt ^| FIND "%%~nI"') DO nmake %%J VERBOSE=1
