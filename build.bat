@@ -54,4 +54,4 @@ FOR /F %%J IN ('ECHO %%I ^| FIND /I "lpng"') DO (
 
 %SED% "/find_package(\(ZLIB\|PNG\)/d" -i CMakeLists.txt sharedlib\CMakeLists.txt
 
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="%M64% -fno-builtin-pow" -DZLIB_LIBRARY=%ZLIB_LIBRARY% -DPNG_LIBRARY=%PNG_LIBRARY% -DPNG_PNG_INCLUDE_DIR=%PNG_PNG_INCLUDE_DIR% -DWITH_CRT_DLL=1 -DCMAKE_EXE_LINKER_FLAGS="/MANIFEST:NO libpng16_static.lib zlibstatic.lib"& FOR %%I IN (*.1) DO FOR /F "TOKENS=2 DELIMS=( " %%J IN ('FIND "add_executable" CMakeLists.txt ^| FIND "%%~nI"') DO nmake %%J VERBOSE=1
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="%M64% -fno-builtin-pow -Dsnprintf(str,n,format,...)=_snprintf_s(str,n,_TRUNCATE,format,__VA_ARGS__)" -DZLIB_LIBRARY=%ZLIB_LIBRARY% -DPNG_LIBRARY=%PNG_LIBRARY% -DPNG_PNG_INCLUDE_DIR=%PNG_PNG_INCLUDE_DIR% -DWITH_CRT_DLL=1 -DCMAKE_EXE_LINKER_FLAGS="/MANIFEST:NO libpng16_static.lib zlibstatic.lib"& FOR %%I IN (*.1) DO FOR /F "TOKENS=2 DELIMS=( " %%J IN ('FIND "add_executable" CMakeLists.txt ^| FIND "%%~nI"') DO nmake %%J VERBOSE=1
