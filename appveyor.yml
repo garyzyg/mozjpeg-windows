@@ -12,11 +12,11 @@ before_build:
 
     CD mozjpeg
 
-    appveyor DownloadFile https://zlib.net/zlib1212.zip
+    appveyor DownloadFile https://www.zlib.net/zlib13.zip
 
-    appveyor DownloadFile https://nchc.dl.sourceforge.net/project/libpng/libpng16/1.6.37/lpng1637.zip
+    appveyor DownloadFile https://nchc.dl.sourceforge.net/project/libpng/libpng16/1.6.40/lpng1640.zip
 
-    appveyor DownloadFile https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win32/nasm-2.15.05-win32.zip
+    appveyor DownloadFile https://www.nasm.us/pub/nasm/releasebuilds/2.16.01/win32/nasm-2.16.01-win32.zip
 
     7z e *.zip */nasm.exe
 
@@ -34,7 +34,7 @@ deploy:
 - provider: GitHub
   tag: $(APPVEYOR_REPO_TAG_NAME)
   auth_token:
-    secure: qfd9VJqjL9qNNylbmc6fxFpFNbsL/cch9xZBaLQPCi2jjVGjh9KhJSFvufMBQ4iP
+    secure: KnIkq2O6PeSz9ujIWO+ir9pIWaPpSIAujI/R9kAdHsgdr6cDypT5Pxfi/+qrYevO
   artifact: /.*\.zip/
   on:
     APPVEYOR_REPO_TAG: true
